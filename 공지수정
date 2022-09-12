@@ -15,6 +15,26 @@ async function changeNotice(postId, text) {
 }
 
 
+/*오픈채팅에서 방장 권한으로 공지수정*/
+async function changeOpenNotice(postId, linkId, text) {
+	  const body = `content=${encodeURI(
+    `[{"text":"${text}","type":"text"}]`
+  )}&object_type=TEXT&notice=true&link_id=`+linkId;
+  let changeNoticeRes = await axios.put(
+      `https://open.kakao.com/moim/posts/${postId}?link_id=${linkId}`,body,
+      {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+          A: "android/9.4.2/ko",
+          Authorization: session_info,
+        },
+      }
+    )
+console.log(changeNoticeRes)
+}
+
+
+
 if(chat.Text.startsWith("!공지수정 ")){
 var message = chat.text.replace("!공지수정 ", "");
 var postId;
